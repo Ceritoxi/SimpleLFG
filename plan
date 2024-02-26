@@ -1,0 +1,66 @@
+Options Panel:
+    - opens with: 
+        - commands: /slfg s, /lfg s, /slfg settings, /lfg settings
+        - button inside main window
+
+LFG Window
+    - opens with: 
+        - commands: /slfg, /lfg
+        - minimap icon
+    - show:
+        - lfg module
+            - search bar
+            - group list
+                - list of groups parsed from global chats
+                    - parsing:
+                        look for messages that have the same format as group create
+                        group name;instance;size;difficulty;what's needed(optional)
+                        - group name: anything
+                        - instance: anything, if matches any instance keyword, save it as that
+                        - size: any number 1-40
+                        - difficulty: NM/HC/CM, try matching similar keywords
+                        - what's needed: parse based on format
+                        if msg is not formatted:
+                        look for keywords and try to make group based on that
+                        save as "non-addon-listing"
+                    - list element:
+                        name, instance, size, diff, minimumilvl, required role icons, apply button
+                        - on apply role select popup
+                        - send formatted application msg to lister
+                            - change list element design if applied
+                            - save listing as applied based on lister name
+                    - one element per lister
+        - create group module
+            - group name
+            - instance
+            - size
+            - difficulty
+            - minimum ilvl
+            - what's needed 
+                - by checkboxes (optional, filled by dafault):
+                    - checkbox per role and amount needed 
+                    (dafaults autocalculated based on current group, checkbox states and amounts)
+                        - rolldown with checkboxes per spec (default all)
+            - on group create send msg to global chat
+                - group name;instance;size;difficulty;ilvl;what's needed(optional)
+                - eg.: "Blastez;TOES;25;500;HC;1/2/12" 
+                - eg.: "Cmerz;MSP;5;CM;;1(BMMONK)/0/1(FROSTMAGE;ARMSWAR)" 
+                - eg.: "Blastez;TOES;25;HC;490;1(PROTWAR)/2(RSHAMAN;HPALA)/12"
+            - show applicants module
+                - shown after group created
+                - list of applicants
+                    - create applicant line based on inbound whisper parse
+                    - name(classcolored)/guild/claimedilvl/shownilvl/claimedspec/acceptbutton/declinebutton
+                        - on accept send invite
+                            - send update msg to chat
+                        - on decline remove from list and send decline msg
+                        - on right click show option to generate log links (logs.stromforge, tauriprogress)
+                        - on hover show detailed info tooltip
+                            - name, ilvls, spec, idk other stuff
+                    - eg.: "Quen  <rats>  501/489  {tank}{heal}  {check} {cross}"
+                - edit button
+                    - edit group module
+                        - same as create
+                        - on change create new group
+                - delist button
+                - after group is full or delist pressed send delist to chat
